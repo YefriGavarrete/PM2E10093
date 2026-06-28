@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PM2E10093.Views.PaginaListaSitios"
+             Title="Sitios guardados">
+    <Grid Padding="16" RowDefinitions="Auto,*" RowSpacing="12">
+        <Label Text="Sitios Guardados"
+               Style="{StaticResource SubHeadline}"
+               HorizontalOptions="Center" />
+
+        <CollectionView x:Name="SitiosCollection"
+                        Grid.Row="1">
+            <CollectionView.EmptyView>
+                <Label Text="No hay sitios guardados"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="8"
+                          ColumnDefinitions="72,*,Auto"
+                          RowDefinitions="Auto,Auto,Auto"
+                          ColumnSpacing="10">
+                        <Image Source="{Binding ImagenPath}"
+                               HeightRequest="56"
+                               WidthRequest="56"
+                               Aspect="AspectFill" />
+
+                        <Label Grid.Column="1"
+                               Text="{Binding Descripcion}"
+                               FontAttributes="Bold"
+                               LineBreakMode="TailTruncation" />
+
+                        <Label Grid.Column="1"
+                               Grid.Row="1"
+                               Text="{Binding FechaCreacion, StringFormat='{0:g}'}"
+                               TextColor="Gray" />
+
+                        <Label Grid.Column="1"
+                               Grid.Row="2"
+                               Text="{Binding Latitud, StringFormat='Lat: {0:F6}'}"
+                               FontSize="12"
+                               TextColor="Gray" />
+
+                        <VerticalStackLayout Grid.Column="2"
+                                             Grid.RowSpan="3"
+                                             Spacing="6">
+                            <Button Text="Mapa"
+                                    Clicked="OnMapaClicked" />
+                            <Button Text="Compartir"
+                                    Clicked="OnCompartirClicked" />
+                            <Button Text="Eliminar"
+                                    BackgroundColor="#9B1C1C"
+                                    TextColor="White"
+                                    Clicked="OnEliminarClicked" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

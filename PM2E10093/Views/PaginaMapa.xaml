@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PM2E10093.Views.PaginaMapa"
+             Title="Mapa">
+    <Grid Padding="16" RowDefinitions="*,Auto">
+        <Border Stroke="{StaticResource Primary}"
+              StrokeThickness="1">
+            <Label Text="Mapa con isShowing"
+                  HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+        </Border>
+
+    </Grid>
+</ContentPage>

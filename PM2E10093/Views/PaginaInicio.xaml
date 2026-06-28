@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PM2E10093.Views.PaginaInicio"
+             Title="Registrar sitio">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
+            <Label Text="Registrar Sitio"
+                   Style="{StaticResource Headline}"
+                   HorizontalOptions="Center" />
+
+            <Border Stroke="{StaticResource Primary}"
+                    StrokeThickness="1"
+                    HeightRequest="220"
+                    Padding="8">
+                <Grid>
+                    <Image x:Name="imgSitio"
+                           Aspect="AspectFill" />
+                    <Label x:Name="lblImagenPendiente"
+                           Text="Sin imagen del sitio"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           TextColor="Gray" />
+                </Grid>
+            </Border>
+
+            <Button Text="Tomar Imagen"
+                    Clicked="OnTomarImagenClicked" />
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Latitud" />
+                    <Entry x:Name="txtLatitud"
+                           Placeholder="Obteniendo GPS..."
+                           IsReadOnly="True"
+                           Keyboard="Numeric" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="1" Spacing="6">
+                    <Label Text="Longitud" />
+                    <Entry x:Name="txtLongitud"
+                           Placeholder="Obteniendo GPS..."
+                           IsReadOnly="True"
+                           Keyboard="Numeric" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Descripcion" />
+                <Editor x:Name="txtDescripcion"
+                        Placeholder="Ingrese una descripcion del sitio"
+                        AutoSize="TextChanges"
+                        HeightRequest="100" />
+            </VerticalStackLayout>
+
+            <Label x:Name="lblEstadoGps"
+                   Text="La ubicacion se obtiene automaticamente."
+                   TextColor="Gray" />
+
+            <Button Text="Agregar"
+                    Clicked="OnAgregarClicked" />
+
+            <Button Text="Listar"
+                    Clicked="OnListarClicked" />
+
+            <Button Text="Salir"
+                    BackgroundColor="#9B1C1C"
+                    TextColor="White"
+                    Clicked="OnSalirClicked" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
