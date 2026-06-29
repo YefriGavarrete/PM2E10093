@@ -8,6 +8,7 @@ public partial class PaginaListaSitios : ContentPage
 {
     private readonly SitiosController sitiosController;
     private readonly MapaController mapaController = new();
+    private Sitio? sitioSeleccionado;
 
     public PaginaListaSitios()
     {
@@ -18,24 +19,56 @@ public partial class PaginaListaSitios : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await CargarSitiosAsync();
+
+        try
+        {
+            await CargarSitiosAsync();
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Lista de sitios", $"No se pudieron cargar los sitios: {ex.Message}", "OK");
+        }
     }
 
     private async Task CargarSitiosAsync()
     {
-        SitiosCollection.ItemsSource = await sitiosController.GetAllAsync();
+        ListasMapas.ItemsSource = await sitiosController.GetAllAsync();
+    }
+
+    private async void ListasMapas_Tapped(object sender, ItemTappedEventArgs e)
+    {
+        if (e.Item is not Sitio sitio)
+            return;
+        sitioSeleccionado = sitio;
+
+        bool respuesta = await DisplayAlert(
+            "Ubicacion", $"Desea ir a la ubicacion indicada?","Si", "No");
+
+        if (respuesta)
+        {
+            await Navigation.PushAsync(new PaginaMapa(sitio));
+        }
+
+        ((ListView)sender).SelectedItem = null;
+    }
+
+    private async void OnAtrasClicked(object sender, EventArgs e)
+    { 
+        await Navigation.PopModalAsync();
+        
     }
 
     private async void OnMapaClicked(object sender, EventArgs e)
     {
-        if (ObtenerSitio(sender) is not Sitio sitio)
+        if (sitioSeleccionado is null)
         {
+            await DisplayAlert("Mapa", "Seleccione un sitio de la lista", "OK");
             return;
         }
 
         try
         {
-            await mapaController.ShowSiteOnMapAsync(sitio);
+            await mapaController.ShowSiteOnMapAsync(sitioSeleccionado);
         }
         catch (Exception ex)
         {
@@ -43,27 +76,14 @@ public partial class PaginaListaSitios : ContentPage
         }
     }
 
-    private async void OnCompartirClicked(object sender, EventArgs e)
-    {
-        if (ObtenerSitio(sender) is not Sitio sitio)
-        {
-            return;
-        }
 
-        try
-        {
-            await mapaController.ShareImageAsync(sitio);
-        }
-        catch (Exception ex)
-        {
-            await DisplayAlert("Compartir", $"No se pudo compartir la imagen: {ex.Message}", "OK");
-        }
-    }
+    
 
     private async void OnEliminarClicked(object sender, EventArgs e)
     {
-        if (ObtenerSitio(sender) is not Sitio sitio)
+        if(sitioSeleccionado is null)
         {
+            await DisplayAlert("Eliminar", "Seleccion primero un sitio de la lista", "OK");
             return;
         }
 
@@ -73,18 +93,14 @@ public partial class PaginaListaSitios : ContentPage
             return;
         }
 
-        await sitiosController.EliminarAsync(sitio);
+        await sitiosController.EliminarAsync(sitioSeleccionado);
 
-        if (!string.IsNullOrWhiteSpace(sitio.ImagenPath) && File.Exists(sitio.ImagenPath))
+        if (!string.IsNullOrWhiteSpace(sitioSeleccionado.ImagenPath) && File.Exists(sitioSeleccionado.ImagenPath))
         {
-            File.Delete(sitio.ImagenPath);
+            File.Delete(sitioSeleccionado.ImagenPath);
         }
 
         await CargarSitiosAsync();
     }
-
-    private static Sitio? ObtenerSitio(object sender)
-    {
-        return sender is Button button ? button.BindingContext as Sitio : null;
-    }
 }
+

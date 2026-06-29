@@ -16,7 +16,7 @@ namespace PM2E10093.Controllers
         {
             if (string.IsNullOrWhiteSpace(descripcion))
             {
-                return Validaciones.Fail("Ingrese una descripcion del sitio.");
+                return Validaciones.Fail("Ingrese una descripción del sitio.");
             }
 
             if (string.IsNullOrWhiteSpace(imagenPath))
@@ -32,7 +32,7 @@ namespace PM2E10093.Controllers
             return Validaciones.Success();
         }
 
-        public Sitio CreateSiteDraft(string descripcion, string imagenPath, double latitud, double longitud)
+        public Sitio CrearSitio(string descripcion, string imagenPath, double latitud, double longitud)
         {
             return new Sitio
             {

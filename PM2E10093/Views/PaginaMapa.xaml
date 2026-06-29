@@ -1,15 +1,55 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
              x:Class="PM2E10093.Views.PaginaMapa"
              Title="Mapa">
-    <Grid Padding="16" RowDefinitions="*,Auto">
-        <Border Stroke="{StaticResource Primary}"
-              StrokeThickness="1">
-            <Label Text="Mapa con isShowing"
-                  HorizontalOptions="Center"
-                   VerticalOptions="Center"/>
-        </Border>
+    <Grid RowDefinitions="Auto,*,Auto" RowSpacing="0" Padding="12">
+        <HorizontalStackLayout Spacing="10">
+            <Button Text="Atras"
+                    BackgroundColor="Gray"
+                    TextColor="White"
+                    Clicked="OnAtrasClicked" />
 
+            <Label x:Name="lblTituloSitio"
+                   Text="Ubicacion seleccionada"
+                   VerticalOptions="Center"
+                   FontAttributes="Bold" />
+        </HorizontalStackLayout>
+
+        <Grid Grid.Row="1" Margin="0,12">
+            <maps:Map x:Name="MapaSitio"
+                      IsShowingUser="True"
+                      IsZoomEnabled="True"
+                      IsScrollEnabled="True"
+                      MapType="Street" />
+
+            <Border x:Name="PinPanel"
+                    BackgroundColor="White"
+                    Stroke="Black"
+                    StrokeThickness="1"
+                    Padding="10"
+                    HorizontalOptions="End"
+                    VerticalOptions="Start"
+                    Margin="16"
+                    IsVisible="False">
+                <Label x:Name="lblPin"
+                       TextColor="Black"
+                       FontAttributes="Bold" />
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="2"
+              RowDefinitions="Auto,Auto"
+              RowSpacing="10">
+            <Image x:Name="imgSitio"
+                   HeightRequest="90"
+                   Aspect="AspectFill"
+                   IsVisible="False" />
+
+            <Button Grid.Row="1"
+                    Text="Compartir Imagen Ubicacion"
+                    Clicked="OnCompartirImagenClicked" />
+        </Grid>
     </Grid>
 </ContentPage>

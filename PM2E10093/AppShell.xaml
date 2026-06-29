@@ -10,9 +10,6 @@
         Title="Sitos"
         ContentTemplate="{DataTemplate views:PaginaInicio}"
         Route="PaginaInicio" />
-    <ShellContent
-      Title="Home"
-      ContentTemplate="{DataTemplate views:PaginaListaSitios}"
-      Route="PaginaListaSitios"/>
+
 
 </Shell>

@@ -5,17 +5,22 @@
              Title="Registrar sitio">
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="16">
-            <Label Text="Registrar Sitio"
+            <Label Text="Site Visitor App"
+                   FlowDirection="RightToLeft"
+                   FontSize="Micro"/>
+
+            <Label Text="Imagen Sitio Visitado"
                    Style="{StaticResource Headline}"
                    HorizontalOptions="Center" />
 
             <Border Stroke="{StaticResource Primary}"
                     StrokeThickness="1"
                     HeightRequest="220"
-                    Padding="8">
+                    Padding="7">
                 <Grid>
                     <Image x:Name="imgSitio"
-                           Aspect="AspectFill" />
+                           Aspect="AspectFit"/>
+                    
                     <Label x:Name="lblImagenPendiente"
                            Text="Sin imagen del sitio"
                            HorizontalOptions="Center"
@@ -29,42 +34,50 @@
 
             <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
                 <VerticalStackLayout Spacing="6">
-                    <Label Text="Latitud" />
+                    <Label Text="Latitud: " />
                     <Entry x:Name="txtLatitud"
-                           Placeholder="Obteniendo GPS..."
+                           Placeholder="Obteniendo GPS"
                            IsReadOnly="True"
                            Keyboard="Numeric" />
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Grid.Column="1" Spacing="6">
-                    <Label Text="Longitud" />
+                    <Label Text="Longitud: " />
                     <Entry x:Name="txtLongitud"
-                           Placeholder="Obteniendo GPS..."
+                           Placeholder="Obteniendo GPS"
                            IsReadOnly="True"
                            Keyboard="Numeric" />
                 </VerticalStackLayout>
             </Grid>
 
-            <VerticalStackLayout Spacing="6">
+            <VerticalStackLayout Spacing="2">
                 <Label Text="Descripcion" />
                 <Editor x:Name="txtDescripcion"
-                        Placeholder="Ingrese una descripcion del sitio"
+                        Placeholder="Ingrese una descripción del sitio"
                         AutoSize="TextChanges"
                         HeightRequest="100" />
-            </VerticalStackLayout>
+            </VerticalStackLayout>  
 
             <Label x:Name="lblEstadoGps"
-                   Text="La ubicacion se obtiene automaticamente."
                    TextColor="Gray" />
 
-            <Button Text="Agregar"
-                    Clicked="OnAgregarClicked" />
 
-            <Button Text="Listar"
-                    Clicked="OnListarClicked" />
+            <Grid RowDefinitions="Auto">
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Padding="5">
+                <Button Text="Agregar"
+                    BackgroundColor="Green"
+                    WidthRequest="160"
+                    Clicked="OnAgregarClicked" />
+                <Button Text="Listar Sitios"
+                    BackgroundColor="Gray"
+                    WidthRequest="160"
+                    Clicked="btnListarSitios" />
+
+                </HorizontalStackLayout>
+            </Grid>
 
             <Button Text="Salir"
-                    BackgroundColor="#9B1C1C"
+                    BackgroundColor="Red"
                     TextColor="White"
                     Clicked="OnSalirClicked" />
         </VerticalStackLayout>

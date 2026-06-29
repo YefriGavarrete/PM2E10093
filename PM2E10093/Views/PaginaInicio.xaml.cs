@@ -29,7 +29,7 @@ public partial class PaginaInicio : ContentPage
         }
     }
 
-    private async void OnTomarImagenClicked(object sender, EventArgs e)
+    private async Task TomarImagen()
     {
         try
         {
@@ -56,9 +56,10 @@ public partial class PaginaInicio : ContentPage
         {
             await DisplayAlert("Error", $"No se pudo tomar la imagen: {ex.Message}", "OK");
         }
+
     }
 
-    private async void OnAgregarClicked(object sender, EventArgs e)
+    private async Task AgregarDatos()
     {
         var validacion = sitiosController.ValidarEntradas(txtDescripcion.Text, imagenPath, latitud, longitud);
 
@@ -70,7 +71,7 @@ public partial class PaginaInicio : ContentPage
 
         try
         {
-            var sitio = sitiosController.CreateSiteDraft(
+            var sitio = sitiosController.CrearSitio(
                 txtDescripcion.Text,
                 imagenPath!,
                 latitud!.Value,
@@ -81,16 +82,30 @@ public partial class PaginaInicio : ContentPage
 
             LimpiarFormulario();
             await ObtenerUbicacionAsync();
+            await Navigation.PushAsync(new PaginaListaSitios());
         }
         catch (Exception ex)
         {
             await DisplayAlert("Error", $"No se pudo guardar el sitio: {ex.Message}", "OK");
         }
+
+    }
+    
+   
+    private async void OnTomarImagenClicked(object sender, EventArgs e)
+    {
+        await TomarImagen();
     }
 
-    private async void OnListarClicked(object sender, EventArgs e)
+    private async void OnAgregarClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync(nameof(PaginaListaSitios));
+        await AgregarDatos();
+       
+    }
+    private async void btnListarSitios(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new PaginaListaSitios());
+
     }
 
     private void OnSalirClicked(object sender, EventArgs e)
@@ -102,7 +117,7 @@ public partial class PaginaInicio : ContentPage
     {
         try
         {
-            lblEstadoGps.Text = "Obteniendo ubicacion actual...";
+            lblEstadoGps.Text = "Obteniendo ubicacion actual";
 
             var request = new GeolocationRequest(GeolocationAccuracy.Best, TimeSpan.FromSeconds(10));
             Location? location = await Geolocation.Default.GetLocationAsync(request);
@@ -113,7 +128,7 @@ public partial class PaginaInicio : ContentPage
                 longitud = null;
                 txtLatitud.Text = string.Empty;
                 txtLongitud.Text = string.Empty;
-                lblEstadoGps.Text = "No se pudo obtener la ubicacion.";
+                lblEstadoGps.Text = "No se pudo obtener la ubicación.";
                 await DisplayAlert("GPS", "No se pudo obtener la latitud y longitud.", "OK");
                 return;
             }
@@ -174,3 +189,4 @@ public partial class PaginaInicio : ContentPage
         ubicacionSolicitada = false;
     }
 }
+
