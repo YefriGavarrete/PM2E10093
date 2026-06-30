@@ -35,6 +35,7 @@
                     IsVisible="False">
                 <Label x:Name="lblPin"
                        TextColor="Black"
+                       WidthRequest="100"
                        FontAttributes="Bold" />
             </Border>
         </Grid>
@@ -42,11 +43,7 @@
         <Grid Grid.Row="2"
               RowDefinitions="Auto,Auto"
               RowSpacing="10">
-            <Image x:Name="imgSitio"
-                   HeightRequest="90"
-                   Aspect="AspectFill"
-                   IsVisible="False" />
-
+            
             <Button Grid.Row="1"
                     Text="Compartir Imagen Ubicacion"
                     Clicked="OnCompartirImagenClicked" />

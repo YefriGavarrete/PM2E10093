@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PM2E10093.Views.PaginaListaSitios"
              Title="Sitios guardados">
-    <Grid Padding="16" RowDefinitions="Auto,Auto,*, Auto" RowSpacing="12">
+    <Grid Padding="16" RowDefinitions="Auto,Auto,*,Auto" RowSpacing="12">
         <Button Text="Atras"
                 HorizontalOptions="Start"
                 Clicked="OnAtrasClicked" />
@@ -15,6 +15,7 @@
 
         <ListView x:Name="ListasMapas"
                   Grid.Row="2"
+                  ItemSelected="ListasMapas_Selected"
                   ItemTapped="ListasMapas_Tapped"
                   HasUnevenRows="True">
             <ListView.ItemTemplate>
@@ -46,29 +47,25 @@
                                    FontSize="12"
                                    TextColor="Gray" />
                         </Grid>
-
-
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <Grid  Grid.Row="3"  RowDefinitions="Auto">
+        <Grid Grid.Row="3" RowDefinitions="Auto">
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Padding="5">
                 <Button Text="Eliminar Casa"
-                                 BackgroundColor="Red"
-                                 WidthRequest="160"
-                                 TextColor="White"
-                                 Clicked="OnEliminarClicked" />
-                <Button Text="Ver Mapa"
-                                 BackgroundColor="BlueViolet"
-                                 WidthRequest="160"
-                                 TextColor="White"
-                                 Clicked="OnMapaClicked" />
+                        BackgroundColor="Red"
+                        WidthRequest="160"
+                        TextColor="White"
+                        Clicked="OnEliminarClicked" />
 
+                <Button Text="Ver Mapa"
+                        BackgroundColor="BlueViolet"
+                        WidthRequest="160"
+                        TextColor="White"
+                        Clicked="OnMapaClicked" />
             </HorizontalStackLayout>
         </Grid>
-
-
     </Grid>
 </ContentPage>

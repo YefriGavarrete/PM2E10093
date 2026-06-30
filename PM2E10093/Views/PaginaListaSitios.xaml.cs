@@ -1,4 +1,5 @@
-﻿using PM2E10093.Controllers;
+﻿using System.Globalization;
+using PM2E10093.Controllers;
 using PM2E10093.Data;
 using PM2E10093.Models;
 
@@ -35,27 +36,36 @@ public partial class PaginaListaSitios : ContentPage
         ListasMapas.ItemsSource = await sitiosController.GetAllAsync();
     }
 
+    private void ListasMapas_Selected(object sender, SelectedItemChangedEventArgs e)
+    {
+        if (e.SelectedItem is Sitio sitio)
+        {
+            sitioSeleccionado = sitio;
+        }
+    }
+
     private async void ListasMapas_Tapped(object sender, ItemTappedEventArgs e)
     {
         if (e.Item is not Sitio sitio)
             return;
+
         sitioSeleccionado = sitio;
 
         bool respuesta = await DisplayAlert(
-            "Ubicacion", $"Desea ir a la ubicacion indicada?","Si", "No");
+            "Accion",
+            "Desea ir a la ubicacion indicada?",
+            "Si",
+            "No");
 
         if (respuesta)
         {
             await Navigation.PushAsync(new PaginaMapa(sitio));
         }
-
-        ((ListView)sender).SelectedItem = null;
     }
 
     private async void OnAtrasClicked(object sender, EventArgs e)
-    { 
-        await Navigation.PopModalAsync();
-        
+    {
+        await Shell.Current.GoToAsync("..");
     }
 
     private async void OnMapaClicked(object sender, EventArgs e)
@@ -76,18 +86,20 @@ public partial class PaginaListaSitios : ContentPage
         }
     }
 
-
-    
-
     private async void OnEliminarClicked(object sender, EventArgs e)
     {
-        if(sitioSeleccionado is null)
+        if (sitioSeleccionado is null)
         {
-            await DisplayAlert("Eliminar", "Seleccion primero un sitio de la lista", "OK");
+            await DisplayAlert("Eliminar", "Seleccione primero un sitio de la lista.", "OK");
             return;
         }
 
-        bool confirmar = await DisplayAlert("Eliminar", "Desea eliminar este sitio?", "Si", "No");
+        bool confirmar = await DisplayAlert(
+            "Eliminar",
+            $"Desea eliminar este sitio?\n\n{sitioSeleccionado.Descripcion}",
+            "Si",
+            "No");
+
         if (!confirmar)
         {
             return;
@@ -100,7 +112,8 @@ public partial class PaginaListaSitios : ContentPage
             File.Delete(sitioSeleccionado.ImagenPath);
         }
 
+        sitioSeleccionado = null;
+        ListasMapas.SelectedItem = null;
         await CargarSitiosAsync();
     }
 }
-

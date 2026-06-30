@@ -58,15 +58,7 @@ public partial class PaginaMapa : ContentPage, IQueryAttributable
         lblPin.Text = $"Pin: {descripcionCorta}";
         MostrarPanelPin(true);
 
-        if (!string.IsNullOrWhiteSpace(sitioSeleccionado.ImagenPath) && File.Exists(sitioSeleccionado.ImagenPath))
-        {
-            imgSitio.Source = ImageSource.FromFile(sitioSeleccionado.ImagenPath);
-            imgSitio.IsVisible = true;
-        }
-        else
-        {
-            imgSitio.IsVisible = false;
-        }
+
 
         MapaSitio.Pins.Clear();
         MapaSitio.Pins.Add(new Pin
